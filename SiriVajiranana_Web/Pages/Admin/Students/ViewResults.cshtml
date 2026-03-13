@@ -1,0 +1,376 @@
+@page
+@model SiriVajiranana_Web.Pages.Admin.Students.ViewResultsModel
+@{
+    ViewData["Title"] = "View Results";
+}
+
+<div class="results-container">
+    <div class="header-section">
+        <div class="title-area">
+            <h1>Student Records</h1>
+            <p>View and manage all registered students and their academic details.</p>
+        </div>
+        <div class="action-area">
+            <a href="/Admin/Students/Register" class="btn-register">
+                <i class="fa-solid fa-user-plus"></i> Register Student
+            </a>
+        </div>
+    </div>
+
+    <div class="search-section">
+        <form method="get" class="search-form">
+            <div class="search-input-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input asp-for="SearchQuery" class="form-control" placeholder="Search by name or registration number..." />
+            </div>
+            <button type="submit" class="btn-search"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+            @if (!string.IsNullOrEmpty(Model.SearchQuery))
+            {
+                <a href="/Admin/Students/ViewResults" class="btn-ghost-clear">✕ Clear</a>
+            }
+        </form>
+    </div>
+
+    <div class="table-card">
+        <div class="table-responsive">
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>Reg. No</th>
+                        <th>Name</th>
+                        <th><i class="fa-solid fa-venus-mars"></i> Gender</th>
+                        <th><i class="fa-solid fa-phone"></i> Mobile</th>
+                        <th><i class="fa-solid fa-calendar-days"></i> Year</th>
+                        <th class="no-print">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Results.Rows.Count > 0)
+                    {
+                        @foreach (System.Data.DataRow row in Model.Results.Rows)
+                        {
+                            <tr>
+                                <td><span class="badge">@row["Registration_No"]</span></td>
+                                <td class="font-semibold">@row["Name"]</td>
+                                <td>
+                                    @if (row["Gender"].ToString() == "Male") { <i class="fa-solid fa-mars text-blue-400"></i> }
+                                    else { <i class="fa-solid fa-venus text-pink-400"></i> }
+                                    @row["Gender"]
+                                </td>
+                                <td><i class="fa-solid fa-mobile-screen-button text-muted"></i> @row["Telephone_No"]</td>
+                                <td><i class="fa-solid fa-calendar text-muted"></i> @row["Year_of_Admission"]</td>
+                                 <td class="no-print">
+                                    <div class="actions-flex">
+                                        <a href="/Admin/Students/Details/@row["Registration_No"]" class="action-btn view" title="View Details">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                        <a asp-page="/Admin/Students/Edit" asp-route-id="@row["Registration_No"]" class="action-btn edit" title="Edit Profile">
+                                            <i class="fa-solid fa-user-pen"></i>
+                                        </a>
+                                        <button type="button" class="action-btn delete" title="Delete Student" onclick="confirmDelete('@row["Registration_No"]')">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center empty-state">
+                                <i class="fa-solid fa-user-slash"></i>
+                                <p>No student records found.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .results-container { padding-bottom: 5rem; animation: fadeIn 0.4s ease-out; }
+
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2.5rem;
+        gap: 2rem;
+    }
+
+    .action-area { display: flex; gap: 1rem; }
+
+    .btn-register {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.65rem 1.4rem;
+        border-radius: 0.75rem;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-decoration: none;
+        color: var(--primary);
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        transition: all 0.2s ease;
+    }
+
+    .btn-register:hover {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+        transform: translateY(-1px);
+    }
+
+    .search-section {
+        background: var(--surface);
+        padding: 1.25rem 1.5rem;
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-form { display: flex; gap: 0.75rem; align-items: center; }
+
+    .search-input-wrapper {
+        position: relative;
+        flex-grow: 1;
+    }
+
+    .search-input-wrapper i {
+        position: absolute;
+        left: 1.25rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--primary);
+        font-size: 0.95rem;
+    }
+
+    .search-input-wrapper .form-control {
+        padding-left: 3rem;
+        padding-top: 0.8rem;
+        padding-bottom: 0.8rem;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.75rem;
+        color: var(--text);
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.95rem;
+        width: 100%;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+    }
+
+    .search-input-wrapper .form-control::placeholder {
+        color: var(--text-muted);
+    }
+
+    .search-input-wrapper .form-control:focus {
+        outline: none;
+        border-color: rgba(99, 102, 241, 0.5);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+        background: rgba(15, 23, 42, 0.9);
+    }
+
+    .btn-search {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.7rem 1.4rem;
+        border-radius: 0.75rem;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border: none;
+        background: var(--primary);
+        color: white;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        white-space: nowrap;
+    }
+
+    .btn-search:hover {
+        background: var(--primary-hover);
+        box-shadow: 0 6px 16px rgba(99, 102, 241, 0.45);
+        transform: translateY(-1px);
+    }
+
+    .table-card {
+        background: var(--surface);
+        border-radius: 1.25rem;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .modern-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    .modern-table th {
+        background: rgba(255, 255, 255, 0.02);
+        padding: 1.25rem 1.5rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .modern-table td {
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        color: var(--text);
+    }
+
+    .modern-table tr:last-child td { border-bottom: none; }
+
+    .modern-table tr:hover td { background: rgba(255, 255, 255, 0.01); }
+
+    .badge {
+        background: rgba(99, 102, 241, 0.15);
+        color: #818cf8;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .font-semibold { font-weight: 600; }
+    
+    .text-blue-400 { color: #60a5fa; margin-right: 0.5rem; }
+    .text-pink-400 { color: #f472b6; margin-right: 0.5rem; }
+    .text-muted { color: var(--text-muted); margin-right: 0.5rem; }
+    
+    .modern-table i { width: 1.25rem; text-align: center; }
+
+    .actions-flex { display: flex; gap: 0.5rem; }
+
+    .action-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .action-btn.edit { background: rgba(99, 102, 241, 0.1); color: #818cf8; }
+    .action-btn.edit:hover { background: var(--primary); color: white; }
+
+    .action-btn.view { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+    .action-btn.view:hover { background: #10b981; color: white; }
+
+    .action-btn.delete { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: none; cursor: pointer; }
+    .action-btn.delete:hover { background: #ef4444; color: white; }
+
+    .btn-ghost {
+        background: transparent;
+        color: var(--text-muted);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .btn-ghost:hover { background: rgba(255, 255, 255, 0.05); color: white; }
+
+    .btn-ghost-clear {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.7rem 1.1rem;
+        border-radius: 0.75rem;
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.88rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        text-decoration: none;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .btn-ghost-clear:hover {
+        background: rgba(239, 68, 68, 0.08);
+        border-color: rgba(239, 68, 68, 0.3);
+        color: #ef4444;
+    }
+
+    .empty-state {
+        padding: 5rem 0;
+        color: var(--text-muted);
+    }
+
+    .empty-state i { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
+
+    /* Print Styles */
+    @@media print {
+        .sidebar, .no-print, .search-section, .btn, .action-area { display: none !important; }
+        .main-content { margin-left: 0 !important; width: 100% !important; padding: 0 !important; }
+        .table-card { border: none; box-shadow: none; }
+        .modern-table th, .modern-table td { color: black !important; border-bottom: 1px solid #ddd !important; }
+        body { background: white !important; color: black !important; }
+        .badge { background: #eee !important; color: black !important; border: 1px solid #ccc; }
+    }
+</style>
+
+@section Scripts {
+    <form id="deleteForm" method="post" asp-page-handler="Delete" style="display:none;">
+        <input type="hidden" name="id" id="deleteId" />
+    </form>
+
+    <script>
+        function confirmDelete(regNo) {
+            Swal.fire({
+                title: '<span style="color: #f8fafc; font-family: \'Outfit\', sans-serif;">Are you sure?</span>',
+                html: '<span style="color: #94a3b8; font-family: \'Outfit\', sans-serif;">You are about to delete student <b style="color: #f8fafc;">' + regNo + '</b>. This action cannot be undone!</span>',
+                icon: 'warning',
+                iconColor: '#ef4444',
+                background: '#1e293b',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#334155',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true,
+                customClass: {
+                    popup: 'swal2-premium-popup',
+                    title: 'swal2-premium-title',
+                    confirmButton: 'swal2-premium-confirm',
+                    cancelButton: 'swal2-premium-cancel'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteId').value = regNo;
+                    document.getElementById('deleteForm').submit();
+                }
+            });
+        }
+    </script>
+}
+
+<style>
+    /* Custom SweetAlert2 Styles to match theme */
+    .swal2-premium-popup {
+        border-radius: 1.25rem !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+    }
+    .swal2-premium-title { font-family: 'Outfit', sans-serif !important; }
+    .swal2-premium-confirm, .swal2-premium-cancel {
+        font-family: 'Outfit', sans-serif !important;
+        font-weight: 600 !important;
+        padding: 0.75rem 1.5rem !important;
+        border-radius: 0.75rem !important;
+    }
+</style>

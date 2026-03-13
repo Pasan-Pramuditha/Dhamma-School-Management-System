@@ -1,0 +1,371 @@
+@page
+@model SiriVajiranana_Web.Pages.Admin.DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dashboard-container">
+    <div class="welcome-header">
+        <h1>Welcome, @Model.AdminName!</h1>
+        <p>Manage Dhamma School students and results effectively.</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon students">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Total Students</h3>
+                <div class="stat-value">@Model.StudentCount</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon teachers">
+                <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Total Teachers</h3>
+                <div class="stat-value">@Model.TeacherCount</div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon results">
+                <i class="fas fa-file-invoice"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Results Entered</h3>
+                <div class="stat-value">@Model.StudentCount</div> @* Placeholder mirroring original DB query logic *@
+            </div>
+        </div>
+    </div>
+
+    <div class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="action-grid">
+            <a href="/Admin/Students/Register" class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <span>Register Student</span>
+            </a>
+            <a href="/Admin/Students/ViewResults" class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <span>View Results</span>
+            </a>
+            <a href="/Admin/Teachers/Register" class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <span>Register Teacher</span>
+            </a>
+            <a href="/Admin/Teachers/Manage" class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-users-cog"></i>
+                </div>
+                <span>View Teachers</span>
+            </a>
+            <a href="/Admin/Backup" class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <span>Backup & Restore</span>
+            </a>
+        </div>
+    </div>
+
+    @if ((Model.AdminID == "01" || Model.AdminID == "1") && Model.PendingAdmins.Any())
+    {
+        <div class="pending-section" style="margin-top: 3rem;">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-user-shield"></i> Pending Admin Approvals</h2>
+                <span class="badge">@Model.PendingAdmins.Count Request(s)</span>
+            </div>
+            
+            <div class="pending-grid">
+                @foreach (var admin in Model.PendingAdmins)
+                {
+                    <div class="pending-card shadow-premium">
+                        <div class="pending-info">
+                            <div class="admin-avatar">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <div class="admin-details">
+                                <h4>@admin.AdminName</h4>
+                                <p>Admin ID: <strong>@admin.AdminID</strong></p>
+                                <p>Username: @admin.Username</p>
+                            </div>
+                        </div>
+                        <div class="pending-actions">
+                            <form method="post" asp-page-handler="Approve" asp-route-id="@admin.AdminID" style="display: inline;">
+                                <button type="submit" class="btn btn-approve"><i class="fa-solid fa-check"></i> Approve</button>
+                            </form>
+                            <form method="post" asp-page-handler="Reject" asp-route-id="@admin.AdminID" style="display: inline;">
+                                <button type="submit" class="btn btn-reject"><i class="fa-solid fa-xmark"></i> Reject</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .dashboard-container {
+        padding: 2rem 0;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .welcome-header {
+        margin-bottom: 3rem;
+    }
+
+    .welcome-header h1 {
+        font-size: 2.5rem;
+        margin: 0;
+        color: var(--text);
+    }
+
+    .welcome-header p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        margin-top: 0.5rem;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .stat-card {
+        background: var(--surface);
+        padding: 1.5rem;
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: transform 0.2s;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .stat-icon.students { background: rgba(99, 102, 241, 0.1); color: #818cf8; }
+    .stat-icon.teachers { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+    .stat-icon.results { background: rgba(16, 185, 129, 0.1); color: #34d399; }
+
+    .stat-content h3 {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text);
+    }
+
+    .quick-actions h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--text);
+    }
+
+    .action-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1.25rem;
+    }
+
+    .action-card {
+        background: var(--surface);
+        padding: 2rem 1.5rem;
+        border-radius: 1rem;
+        text-align: center;
+        text-decoration: none;
+        color: var(--text);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.2s;
+    }
+
+    .action-card:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--primary);
+        transform: translateY(-3px);
+    }
+
+    .action-icon {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+
+    .action-card span {
+        font-weight: 500;
+        display: block;
+    }
+
+    /* Pending Section */
+    .pending-section {
+        margin-bottom: 3rem;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.5rem;
+        margin: 0;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    .section-header h2 i {
+        color: var(--primary);
+    }
+
+    .badge {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .pending-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .pending-card {
+        background: var(--surface);
+        padding: 1.5rem;
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        transition: transform 0.2s;
+    }
+
+    .pending-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(99, 102, 241, 0.2);
+    }
+
+    .pending-info {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+    }
+
+    .admin-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .admin-details h4 {
+        margin: 0 0 0.25rem 0;
+        font-size: 1.1rem;
+        color: white;
+    }
+
+    .admin-details p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    .admin-details strong {
+        color: var(--primary);
+    }
+
+    .pending-actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn {
+        padding: 0.6rem 1rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.2s;
+        border: none;
+        flex: 1;
+        font-size: 0.9rem;
+    }
+
+    .btn-approve {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .btn-approve:hover {
+        background: #10b981;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .btn-reject {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-reject:hover {
+        background: #ef4444;
+        color: white;
+        transform: translateY(-2px);
+    }
+</style>

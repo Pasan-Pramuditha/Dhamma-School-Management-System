@@ -1,0 +1,149 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|c:\\users\\pasan\\desktop\\siri vajiranana dhamma school system\\sirivajiranana_web\\pages\\admin\\teachers\\manage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|solutionrelative:sirivajiranana_web\\pages\\admin\\teachers\\manage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|c:\\users\\pasan\\desktop\\siri vajiranana dhamma school system\\sirivajiranana_web\\pages\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|solutionrelative:sirivajiranana_web\\pages\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|c:\\users\\pasan\\desktop\\siri vajiranana dhamma school system\\sirivajiranana_web\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|solutionrelative:sirivajiranana_web\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|c:\\users\\pasan\\desktop\\siri vajiranana dhamma school system\\sirivajiranana_web\\models\\signupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|solutionrelative:sirivajiranana_web\\models\\signupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|c:\\users\\pasan\\desktop\\siri vajiranana dhamma school system\\sirivajiranana_web\\models\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|solutionrelative:sirivajiranana_web\\models\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|c:\\users\\pasan\\desktop\\siri vajiranana dhamma school system\\sirivajiranana_web\\models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|solutionrelative:sirivajiranana_web\\models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|c:\\users\\pasan\\desktop\\siri vajiranana dhamma school system\\sirivajiranana_web\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|solutionrelative:sirivajiranana_web\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|c:\\users\\pasan\\desktop\\siri vajiranana dhamma school system\\sirivajiranana_web\\pages\\account\\signup.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|solutionrelative:sirivajiranana_web\\pages\\account\\signup.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Manage.cshtml",
+              "DocumentMoniker": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Pages\\Admin\\Teachers\\Manage.cshtml",
+              "RelativeDocumentMoniker": "SiriVajiranana_Web\\Pages\\Admin\\Teachers\\Manage.cshtml",
+              "ToolTip": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Pages\\Admin\\Teachers\\Manage.cshtml",
+              "RelativeToolTip": "SiriVajiranana_Web\\Pages\\Admin\\Teachers\\Manage.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-12T07:56:40.546Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Pages\\Admin\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "SiriVajiranana_Web\\Pages\\Admin\\Dashboard.cshtml",
+              "ToolTip": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Pages\\Admin\\Dashboard.cshtml",
+              "RelativeToolTip": "SiriVajiranana_Web\\Pages\\Admin\\Dashboard.cshtml",
+              "ViewState": "AgIAAAUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-12T07:09:33.393Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SignUpViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Models\\SignUpViewModel.cs",
+              "RelativeDocumentMoniker": "SiriVajiranana_Web\\Models\\SignUpViewModel.cs",
+              "ToolTip": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Models\\SignUpViewModel.cs",
+              "RelativeToolTip": "SiriVajiranana_Web\\Models\\SignUpViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T05:41:00.19Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LoginViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Models\\LoginViewModel.cs",
+              "RelativeDocumentMoniker": "SiriVajiranana_Web\\Models\\LoginViewModel.cs",
+              "ToolTip": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Models\\LoginViewModel.cs",
+              "RelativeToolTip": "SiriVajiranana_Web\\Models\\LoginViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T05:40:59.185Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Models\\Admin.cs",
+              "RelativeDocumentMoniker": "SiriVajiranana_Web\\Models\\Admin.cs",
+              "ToolTip": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Models\\Admin.cs",
+              "RelativeToolTip": "SiriVajiranana_Web\\Models\\Admin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T05:40:57.507Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Student.cs",
+              "DocumentMoniker": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Models\\Student.cs",
+              "RelativeDocumentMoniker": "SiriVajiranana_Web\\Models\\Student.cs",
+              "ToolTip": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Models\\Student.cs",
+              "RelativeToolTip": "SiriVajiranana_Web\\Models\\Student.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T05:23:12.588Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Pages\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "SiriVajiranana_Web\\Pages\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Pages\\Account\\Login.cshtml",
+              "RelativeToolTip": "SiriVajiranana_Web\\Pages\\Account\\Login.cshtml",
+              "ViewState": "AgIAAMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-12T05:22:17.815Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SignUp.cshtml",
+              "DocumentMoniker": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Pages\\Account\\SignUp.cshtml",
+              "RelativeDocumentMoniker": "SiriVajiranana_Web\\Pages\\Account\\SignUp.cshtml",
+              "ToolTip": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Pages\\Account\\SignUp.cshtml",
+              "RelativeToolTip": "SiriVajiranana_Web\\Pages\\Account\\SignUp.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-12T05:22:04.288Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Siri Vajiranana Dhamma School</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --nav-width: 280px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--nav-width);
+            height: 100vh;
+            background: var(--surface);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2rem 1.5rem;
+            box-sizing: border-box;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .brand-name {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .nav-link.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: var(--nav-width);
+            width: calc(100% - var(--nav-width));
+            padding: 2rem 3rem;
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+
+        /* Responsive */
+        @@media (max-width: 1024px) {
+            .sidebar { width: 80px; padding: 2rem 1rem; text-align: center; }
+            .brand-name, .nav-link span { display: none; }
+            .nav-link { justify-content: center; }
+            .main-content { margin-left: 80px; width: calc(100% - 80px); }
+        }
+
+        /* Custom SweetAlert2 Styles to match theme globally */
+        .swal2-premium-popup {
+            border-radius: 1.25rem !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+        }
+        .swal2-premium-title { font-family: 'Outfit', sans-serif !important; }
+        .swal2-premium-confirm, .swal2-premium-cancel {
+            font-family: 'Outfit', sans-serif !important;
+            font-weight: 600 !important;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 0.75rem !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <a href="/Admin/Dashboard" class="brand">
+            <div class="brand-logo"><i class="fas fa-dharmachakra"></i></div>
+            <div class="brand-name">Siri Vajiranana<br> Dhamma School </div>
+        </a>
+
+        <ul class="nav-links">
+            <li class="nav-item">
+                <a href="/Admin/Dashboard" class="nav-link @(ViewData["Title"]?.ToString() == "Dashboard" ? "active" : "")">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/Admin/Students/Register" class="nav-link @(ViewData["Title"]?.ToString() == "Register Student" ? "active" : "")">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Registration</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/Admin/Students/ViewResults" class="nav-link @(ViewData["Title"]?.ToString() == "View Results" ? "active" : "")">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>View Results</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/Admin/Teachers/Register" class="nav-link @(ViewData["Title"]?.ToString() == "Register Teacher" ? "active" : "")">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Register Teacher</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/Admin/Teachers/Manage" class="nav-link @(ViewData["Title"]?.ToString() == "Manage Teachers" ? "active" : "")">
+                    <i class="fas fa-users-cog"></i>
+                    <span>View Teachers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/Admin/Backup" class="nav-link @(ViewData["Title"]?.ToString() == "Backup" ? "active" : "")">
+                    <i class="fas fa-database"></i>
+                    <span>Backup</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="#" onclick="confirmLogout(event)" class="nav-link">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        @RenderBody()
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmLogout(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: '<span style="color: #f8fafc; font-family: \'Outfit\', sans-serif;">Sign out?</span>',
+                html: '<span style="color: #94a3b8; font-family: \'Outfit\', sans-serif;">Are you sure you want to log out of the system?</span>',
+                icon: 'question',
+                background: '#1e293b',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#334155',
+                confirmButtonText: 'Yes, log out',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true,
+                customClass: {
+                    popup: 'swal2-premium-popup',
+                    title: 'swal2-premium-title',
+                    confirmButton: 'swal2-premium-confirm',
+                    cancelButton: 'swal2-premium-cancel'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/Account/Login';
+                }
+            });
+        }
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

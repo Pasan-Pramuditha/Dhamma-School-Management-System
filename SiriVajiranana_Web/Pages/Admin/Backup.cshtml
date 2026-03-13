@@ -1,0 +1,400 @@
+@page
+@model SiriVajiranana_Web.Pages.Admin.BackupModel
+@{
+    ViewData["Title"] = "Backup";
+}
+
+<div class="backup-container">
+    <div class="header-section">
+        <h1>Backup & Maintenance</h1>
+        <p>Secure your data by creating periodic backups of the Dhamma School database.</p>
+    </div>
+
+    <div class="maintenance-grid">
+        <div class="maintenance-card">
+            <div class="card-header">
+                <i class="fas fa-file-export"></i>
+                <h2>Create Database Backup</h2>
+            </div>
+            <p>This will generate a full backup file (.bak) of your current database state.</p>
+            
+            <form method="post" asp-page-handler="Backup" class="maintenance-form">
+                <div class="form-group">
+                    <label>Backup Destination Path</label>
+                    <div class="input-group">
+                        <input asp-for="BackupPath" id="backupPathInput" class="form-control" />
+                        <button type="button" class="btn btn-secondary" onclick="openFolderBrowser()">Browse...</button>
+                    </div>
+                    <small class="help-text">Default: Desktop\Backups</small>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">
+                    <i class="fas fa-download"></i> Start Backup Process
+                </button>
+            </form>
+        </div>
+
+        <div class="maintenance-card">
+            <div class="card-header">
+                <i class="fas fa-file-import"></i>
+                <h2>Restore Database</h2>
+            </div>
+            <p>Restore your database from a previously generated .bak file. <strong>Warning: This will overwrite current data.</strong></p>
+            
+            <form id="restoreForm" method="post" asp-page-handler="Restore" enctype="multipart/form-data" class="maintenance-form">
+                <div class="form-group">
+                    <label>Select Backup File (.bak)</label>
+                    <input type="file" id="RestoreFile" asp-for="RestoreFile" accept=".bak" class="form-control" required style="padding: 0.5rem;"/>
+                </div>
+                <button type="button" class="btn btn-danger btn-full" onclick="confirmRestore()">
+                    <i class="fas fa-upload"></i> Restore Database
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Folder Browser Modal -->
+<div id="folderModal" class="folder-modal" style="display: none;">
+    <div class="folder-modal-content">
+        <div class="folder-modal-header">
+            <h3>Select Folder</h3>
+            <button type="button" class="close-btn" onclick="closeFolderBrowser()">&times;</button>
+        </div>
+        <div class="folder-modal-body">
+            <div class="current-path-bar">
+                <button type="button" class="btn btn-sm btn-secondary" onclick="goUp()" id="btnGoUp" title="Go Up Level"><i class="fas fa-arrow-up"></i></button>
+                <input type="text" id="currentPathDisplay" readonly class="form-control" />
+            </div>
+            <div class="folder-list" id="folderList">
+                <!-- Folders injected here -->
+            </div>
+        </div>
+        <div class="folder-modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeFolderBrowser()">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="selectCurrentFolder()">Select Folder</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentBrowserPath = '';
+
+    function openFolderBrowser() {
+        document.getElementById('folderModal').style.display = 'flex';
+        loadDrives();
+    }
+
+    function closeFolderBrowser() {
+        document.getElementById('folderModal').style.display = 'none';
+    }
+
+    function loadDrives() {
+        currentBrowserPath = '';
+        updatePathDisplay();
+        fetch('?handler=Drives')
+            .then(res => res.json())
+            .then(data => {
+                renderList(data, true);
+            });
+    }
+
+    function loadFolders(path) {
+        currentBrowserPath = path;
+        updatePathDisplay();
+        fetch(`?handler=Folders&path=${encodeURIComponent(path)}`)
+            .then(res => res.json())
+            .then(data => {
+                renderList(data, false);
+            });
+    }
+
+    function renderList(items, isDrives) {
+        const listContainer = document.getElementById('folderList');
+        listContainer.innerHTML = '';
+        if (items.length === 0 && !isDrives) {
+            listContainer.innerHTML = '<div class="folder-item text-muted">No accessible folders</div>';
+            return;
+        }
+        items.forEach(item => {
+            const div = document.createElement('div');
+            div.className = isDrives ? 'folder-item drive' : 'folder-item';
+            div.innerHTML = `<i class="fas ${isDrives ? 'fa-hdd' : 'fa-folder'}"></i> ${item.name}`;
+            div.onclick = () => loadFolders(item.path);
+            listContainer.appendChild(div);
+        });
+    }
+
+    function updatePathDisplay() {
+        document.getElementById('currentPathDisplay').value = currentBrowserPath || 'Select a Drive...';
+        document.getElementById('btnGoUp').disabled = !currentBrowserPath;
+    }
+
+    function goUp() {
+        if (!currentBrowserPath) return;
+        let parts = currentBrowserPath.replace(/\\$/, '').split('\\');
+        if (parts.length <= 1) {
+            loadDrives();
+        } else {
+            parts.pop();
+            let parentPath = parts.join('\\');
+            if (!parentPath.includes('\\')) parentPath += '\\'; // Drive root format C:\
+            loadFolders(parentPath);
+        }
+    }
+
+    function selectCurrentFolder() {
+        if (currentBrowserPath) {
+            document.getElementById('backupPathInput').value = currentBrowserPath;
+            closeFolderBrowser();
+        } else {
+            alert('Please select a folder or drive first.');
+        }
+    }
+
+    function confirmRestore() {
+        const fileInput = document.getElementById('RestoreFile');
+        if (!fileInput.value) {
+            Swal.fire({
+                title: '<span style="color: #f8fafc; font-family: \'Outfit\', sans-serif;">Error</span>',
+                html: '<span style="color: #94a3b8; font-family: \'Outfit\', sans-serif;">Please select a backup file first.</span>',
+                icon: 'error',
+                background: '#1e293b',
+                confirmButtonColor: '#3b82f6',
+                customClass: { popup: 'swal2-premium-popup', title: 'swal2-premium-title', confirmButton: 'swal2-premium-confirm' }
+            });
+            return;
+        }
+
+        Swal.fire({
+            title: '<span style="color: #f8fafc; font-family: \'Outfit\', sans-serif;">Are you sure?</span>',
+            html: '<span style="color: #94a3b8; font-family: \'Outfit\', sans-serif;">You are about to restore the database. <b>All current data will be overwritten</b> and this action cannot be undone!</span>',
+            icon: 'warning',
+            iconColor: '#ef4444',
+            background: '#1e293b',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#334155',
+            confirmButtonText: 'Yes, restore it!',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true,
+            customClass: {
+                popup: 'swal2-premium-popup',
+                title: 'swal2-premium-title',
+                confirmButton: 'swal2-premium-confirm',
+                cancelButton: 'swal2-premium-cancel'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('restoreForm').submit();
+            }
+        });
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <text>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: '<span style="color: #f8fafc; font-family: \'Outfit\', sans-serif;">Success!</span>',
+                html: `<span style="color: #94a3b8; font-family: 'Outfit', sans-serif;">@Html.Raw(Model.Message.Replace("`", "\\`"))</span>`,
+                icon: 'success',
+                background: '#1e293b',
+                confirmButtonColor: '#10b981',
+                customClass: { popup: 'swal2-premium-popup', title: 'swal2-premium-title', confirmButton: 'swal2-premium-confirm' }
+            });
+        });
+        </text>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <text>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: '<span style="color: #f8fafc; font-family: \'Outfit\', sans-serif;">Error!</span>',
+                html: `<span style="color: #94a3b8; font-family: 'Outfit', sans-serif;">@Html.Raw(Model.ErrorMessage.Replace("`", "\\`"))</span>`,
+                icon: 'error',
+                background: '#1e293b',
+                confirmButtonColor: '#ef4444',
+                customClass: { popup: 'swal2-premium-popup', title: 'swal2-premium-title', confirmButton: 'swal2-premium-confirm' }
+            });
+        });
+        </text>
+    }
+</script>
+
+<style>
+    .backup-container { max-width: 900px; margin: 0 auto; }
+    
+    .maintenance-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .maintenance-card {
+        background: var(--surface);
+        padding: 2.5rem;
+        border-radius: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .maintenance-card.disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .card-header i { font-size: 1.5rem; color: var(--primary); }
+    .card-header h2 { font-size: 1.25rem; margin: 0; }
+
+    .maintenance-card p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+        flex-grow: 1;
+    }
+
+    .maintenance-form { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .help-text { display: block; margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted); }
+
+    .form-group label {
+        display: block; margin-bottom: 0.75rem; font-family: 'Outfit', sans-serif; font-weight: 500; color: var(--text); font-size: 1rem;
+    }
+    
+    .form-control {
+        width: 100%; box-sizing: border-box;
+        padding: 0.75rem 1.25rem;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.75rem;
+        color: var(--text);
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: rgba(99, 102, 241, 0.5);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+        background: rgba(15, 23, 42, 0.9);
+    }
+    
+    input[type=file].form-control {
+        padding: 0.65rem;
+    }
+    input[type=file].form-control::file-selector-button {
+        background: rgba(99, 102, 241, 0.1);
+        color: #818cf8;
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        margin-right: 1rem;
+        transition: all 0.2s;
+    }
+    input[type=file].form-control::file-selector-button:hover {
+        background: var(--primary);
+        color: white;
+    }
+
+    .btn-primary {
+        background: var(--primary); color: white; border: none;
+        padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-family: 'Outfit', sans-serif; font-weight: 600;
+        transition: all 0.2s; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+    }
+    .btn-primary:hover { background: #4f46e5; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.45); color: white; }
+    
+    .btn-secondary {
+        background: rgba(255, 255, 255, 0.05); color: var(--text); border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-family: 'Outfit', sans-serif; font-weight: 500;
+        transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+    }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); color: white; border-color: rgba(255, 255, 255, 0.2); }
+
+    .btn-danger {
+        background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);
+        padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-family: 'Outfit', sans-serif; font-weight: 600;
+        transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+    }
+    .btn-danger:hover { background: #ef4444; color: white; transform: translateY(-1px); border-color: #ef4444; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
+
+    .btn-full { width: 100%; justify-content: center; }
+
+    .input-group {
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    .folder-modal {
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.5);
+        display: flex; align-items: center; justify-content: center;
+        z-index: 1000;
+        backdrop-filter: blur(5px);
+    }
+    .folder-modal-content {
+        background: var(--surface);
+        width: 90%; max-width: 500px;
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex; flex-direction: column;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .folder-modal-header {
+        padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .folder-modal-header h3 { margin: 0; font-size: 1.2rem; }
+    .close-btn { background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; }
+    .folder-modal-body { padding: 1.5rem; }
+    .current-path-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .current-path-bar .form-control { flex-grow: 1; font-size: 0.9rem; margin-bottom: 0; }
+    .folder-list {
+        height: 300px; overflow-y: auto;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 0.5rem;
+        background: rgba(0,0,0,0.2);
+    }
+    .folder-item {
+        padding: 0.75rem 1rem;
+        cursor: pointer;
+        display: flex; align-items: center; gap: 0.75rem;
+        border-bottom: 1px solid rgba(255,255,255,0.02);
+    }
+    .folder-item:hover { background: rgba(255,255,255,0.05); }
+    .folder-item i { color: #facc15; }
+    .folder-item.drive i { color: #94a3b8; }
+    .folder-item.text-muted { cursor: default; }
+    .folder-modal-footer {
+        padding: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex; justify-content: flex-end; gap: 1rem;
+    }
+    .btn-sm { padding: 0.5rem 0.75rem; font-size: 0.9rem; border-radius: 0.5rem; }
+
+    /* Custom SweetAlert2 Styles to match theme */
+    .swal2-premium-popup {
+        border-radius: 1.25rem !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+    }
+    .swal2-premium-title { font-family: 'Outfit', sans-serif !important; }
+    .swal2-premium-confirm, .swal2-premium-cancel {
+        font-family: 'Outfit', sans-serif !important;
+        font-weight: 600 !important;
+        padding: 0.75rem 1.5rem !important;
+        border-radius: 0.75rem !important;
+    }
+</style>

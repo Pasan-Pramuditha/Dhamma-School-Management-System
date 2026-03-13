@@ -1,0 +1,339 @@
+@page "{id:int?}"
+@model SiriVajiranana_Web.Pages.Admin.Students.RegisterModel
+@{
+    ViewData["Title"] = "Register Student";
+}
+
+<div class="register-container">
+    <div class="header-section">
+        <h1>Student Registration</h1>
+        <p>Enter student details and academic records for grades 05 to 11.</p>
+    </div>
+
+    <form method="post" class="modern-form">
+        <div class="form-section">
+            <h2 class="section-title"><i class="fa-solid fa-user-gear"></i> Personal Information</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label asp-for="Student.Registration_No">Registration Number</label>
+                    <input asp-for="Student.Registration_No" class="form-control" placeholder="Enter ID" />
+                    <span asp-validation-for="Student.Registration_No" class="validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Student.Name">Full Name</label>
+                    <input asp-for="Student.Name" class="form-control" placeholder="Enter student's full name" />
+                    <span asp-validation-for="Student.Name" class="validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Student.Gender">Gender</label>
+                    <select asp-for="Student.Gender" class="form-control">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <span asp-validation-for="Student.Gender" class="validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Student.Telephone_No">Telephone No</label>
+                    <input asp-for="Student.Telephone_No" class="form-control" placeholder="Enter phone number" />
+                    <span asp-validation-for="Student.Telephone_No" class="validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Student.Year_of_Admission">Year of Admission</label>
+                    <input asp-for="Student.Year_of_Admission" class="form-control" placeholder="YYYY" />
+                    <span asp-validation-for="Student.Year_of_Admission" class="validation-error"></span>
+                </div>
+
+                <div class="form-group full-width">
+                    <label asp-for="Student.Address">Address</label>
+                    <textarea asp-for="Student.Address" class="form-control" rows="2" placeholder="Enter permanent address"></textarea>
+                    <span asp-validation-for="Student.Address" class="validation-error"></span>
+                </div>
+
+                <div class="form-group full-width">
+                    <label asp-for="Student.Other_Skills">Other Skills / Notes</label>
+                    <textarea asp-for="Student.Other_Skills" class="form-control" rows="2" placeholder="Any additional information"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Academic Records (Grades 05 - 11)</h2>
+            <div class="grades-container">
+                @for (int g = 5; g <= 11; g++)
+                {
+                    string gradeStr = g.ToString("D2");
+                    <div class="grade-row">
+                        <div class="grade-label">Grade @gradeStr</div>
+                        <div class="grade-inputs">
+                            <div class="input-group">
+                                <span>Buddhism</span>
+                                <input name="Student.Grade@(gradeStr)_Buddhism" value="@Model.Student.GetType().GetProperty("Grade" + gradeStr + "_Buddhism")?.GetValue(Model.Student)" class="form-control sm" />
+                            </div>
+                            <div class="input-group">
+                                <span>Abhidhamma</span>
+                                <input name="Student.Grade@(gradeStr)_Abhidhamma" value="@Model.Student.GetType().GetProperty("Grade" + gradeStr + "_Abhidhamma")?.GetValue(Model.Student)" class="form-control sm" />
+                            </div>
+                            <div class="input-group">
+                                <span>Pali</span>
+                                <input name="Student.Grade@(gradeStr)_Pali" value="@Model.Student.GetType().GetProperty("Grade" + gradeStr + "_Pali")?.GetValue(Model.Student)" class="form-control sm" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a href="/Admin/Dashboard" class="btn btn-cancel"><i class="fas fa-times"></i> Cancel</a>
+            <button type="submit" asp-page-handler="Save" class="btn btn-primary"><i class="fas fa-save"></i> Save Record</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <text>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: '<span style="color: #f8fafc; font-family: \'Outfit\', sans-serif;">Success!</span>',
+                    html: `<span style="color: #94a3b8; font-family: 'Outfit', sans-serif;">@Html.Raw(Model.Message.Replace("`", "\\`"))</span>`,
+                    icon: 'success',
+                    background: '#1e293b',
+                    confirmButtonColor: '#10b981',
+                    customClass: { popup: 'swal2-premium-popup', title: 'swal2-premium-title', confirmButton: 'swal2-premium-confirm' }
+                }).then(() => {
+                    window.location.href = '/Admin/Students/Register';
+                });
+            });
+            </text>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <text>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: '<span style="color: #f8fafc; font-family: \'Outfit\', sans-serif;">Error!</span>',
+                    html: `<span style="color: #94a3b8; font-family: 'Outfit', sans-serif;">@Html.Raw(Model.ErrorMessage.Replace("`", "\\`"))</span>`,
+                    icon: 'error',
+                    background: '#1e293b',
+                    confirmButtonColor: '#ef4444',
+                    customClass: { popup: 'swal2-premium-popup', title: 'swal2-premium-title', confirmButton: 'swal2-premium-confirm' }
+                });
+            });
+            </text>
+        }
+    </script>
+}
+
+<style>
+    .register-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding-bottom: 5rem;
+    }
+
+    .header-section { margin-bottom: 2.5rem; }
+    .header-section h1 { font-size: 2.2rem; margin: 0; }
+    .header-section p { color: var(--text-muted); margin-top: 0.5rem; }
+
+    .modern-form {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .form-section {
+        background: var(--surface);
+        padding: 2rem;
+        border-radius: 1.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--primary);
+    }
+
+    .validation-error {
+        color: #ef4444;
+        font-size: 0.8rem;
+        margin-top: 0.4rem;
+        display: block;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem 2.5rem;
+    }
+
+    .form-group.full-width { grid-column: span 3; }
+
+    .form-group label {
+        display: block;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 0.8rem;
+        font-weight: 500;
+    }
+
+    .form-control {
+        width: 100%;
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+        color: white;
+        font-family: inherit;
+        transition: all 0.2s;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    .form-control.sm { padding: 0.4rem 0.6rem; font-size: 0.9rem; text-align: center; }
+
+    .input-with-button { display: flex; gap: 0.5rem; }
+    .btn-icon-bg {
+        background: var(--primary);
+        border: none;
+        color: white;
+        border-radius: 0.75rem;
+        width: 45px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .btn-icon-bg:hover { background: var(--primary-hover); }
+
+    /* Grades Table Styles */
+    .grades-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .grade-row {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 0.75rem;
+    }
+
+    .grade-label {
+        font-weight: 600;
+        min-width: 80px;
+        color: var(--text);
+    }
+
+    .grade-inputs {
+        display: flex;
+        flex-grow: 1;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .input-group {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex: 1;
+        min-width: 150px;
+    }
+
+    .input-group span {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+    }
+
+    /* Actions */
+    .form-actions {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: flex-end;
+        position: sticky;
+        bottom: 0;
+        margin-top: 4rem;
+        padding: 2rem 0;
+        background: var(--bg);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 1000;
+        box-shadow: 0 -20px 20px -10px var(--bg);
+    }
+
+    .btn {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.2s;
+    }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+    .btn-cancel {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.8rem 1.5rem;
+        border-radius: 0.75rem;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        color: var(--text-muted);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.2s ease;
+    }
+    .btn-cancel:hover {
+        background: rgba(239, 68, 68, 0.08);
+        border-color: rgba(239, 68, 68, 0.3);
+        color: #ef4444;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary { background: #475569; color: white; }
+    .btn-secondary:hover { background: #334155; transform: translateY(-2px); }
+
+    .btn-danger { background: #ef4444; color: white; }
+    .btn-danger:hover { background: #dc2626; transform: translateY(-2px); }
+
+    /* Custom SweetAlert2 Styles to match theme */
+    .swal2-premium-popup {
+        border-radius: 1.25rem !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+    }
+    .swal2-premium-title { font-family: 'Outfit', sans-serif !important; }
+    .swal2-premium-confirm, .swal2-premium-cancel {
+        font-family: 'Outfit', sans-serif !important;
+        font-weight: 600 !important;
+        padding: 0.75rem 1.5rem !important;
+        border-radius: 0.75rem !important;
+    }
+</style>

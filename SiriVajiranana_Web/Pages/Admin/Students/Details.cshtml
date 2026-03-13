@@ -1,0 +1,294 @@
+@page "{id:int?}"
+@model SiriVajiranana_Web.Pages.Admin.Students.DetailsModel
+@{
+    ViewData["Title"] = "Student Details";
+}
+
+<div class="details-container">
+    <div class="header-nav">
+        <a href="/Admin/Students/ViewResults" class="btn-back-list">
+            <i class="fa-solid fa-arrow-left"></i> Back to List
+        </a>
+        <div class="actions">
+            <button onclick="window.print()" class="btn-print">
+                <i class="fa-solid fa-print"></i> Print Details
+            </button>
+            <a href="/Admin/Students/Edit/@Model.Student.Registration_No" class="btn-edit-profile">
+                <i class="fa-solid fa-user-pen"></i> Edit Profile
+            </a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            <i class="fa-solid fa-circle-exclamation"></i> @Model.ErrorMessage
+        </div>
+    }
+
+    <div class="profile-layout">
+        <div class="profile-sidebar">
+            <div class="card profile-header-card">
+                <div class="avatar-area">
+                    <div class="avatar-box">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <h2>@Model.Student.Name</h2>
+                    <span class="badge">REG No: @Model.Student.Registration_No</span>
+                </div>
+                <div class="quick-stats">
+                    <div class="stat-item">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <div>
+                            <span class="stat-label">Admission Year</span>
+                            <span class="stat-value">@Model.Student.Year_of_Admission</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fa-solid fa-venus-mars"></i>
+                        <div>
+                            <span class="stat-label">Gender</span>
+                            <span class="stat-value">@Model.Student.Gender</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card contact-card">
+                <h3>Contact Information</h3>
+                <div class="info-list">
+                    <div class="info-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <div>
+                            <span class="info-label">Mobile Number</span>
+                            <span class="info-value">@Model.Student.Telephone_No</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div>
+                            <span class="info-label">Address</span>
+                            <span class="info-value">@Model.Student.Address</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card skills-card">
+                <h3><i class="fa-solid fa-star"></i> Other Skills</h3>
+                <p>@(string.IsNullOrEmpty(Model.Student.Other_Skills) ? "No additional skills recorded." : Model.Student.Other_Skills)</p>
+            </div>
+        </div>
+
+        <div class="profile-main">
+            <div class="card results-card">
+                <div class="card-header">
+                    <h3><i class="fa-solid fa-graduation-cap"></i> Academic Performance</h3>
+                    <p>Examination results history from Grade 05 to Grade 11.</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th>Grade</th>
+                                <th>Buddhism</th>
+                                <th>Abhidhamma</th>
+                                <th>Pali</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 5; i <= 11; i++)
+                            {
+                                string gradeStr = i.ToString("D2");
+                                var type = Model.Student.GetType();
+                                string buddhism = type.GetProperty($"Grade{gradeStr}_Buddhism")?.GetValue(Model.Student)?.ToString() ?? "";
+                                string abhidhamma = type.GetProperty($"Grade{gradeStr}_Abhidhamma")?.GetValue(Model.Student)?.ToString() ?? "";
+                                string pali = type.GetProperty($"Grade{gradeStr}_Pali")?.GetValue(Model.Student)?.ToString() ?? "";
+
+                                if (!string.IsNullOrEmpty(buddhism) || !string.IsNullOrEmpty(abhidhamma) || !string.IsNullOrEmpty(pali))
+                                {
+                                    <tr>
+                                        <td class="font-semibold">Grade @i</td>
+                                        <td><span class="result-badge">@(string.IsNullOrEmpty(buddhism) ? "-" : buddhism)</span></td>
+                                        <td><span class="result-badge">@(string.IsNullOrEmpty(abhidhamma) ? "-" : abhidhamma)</span></td>
+                                        <td><span class="result-badge">@(string.IsNullOrEmpty(pali) ? "-" : pali)</span></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .details-container { animation: fadeIn 0.4s ease-out; padding-bottom: 3rem; }
+    
+    .header-nav { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        margin-bottom: 2rem; 
+    }
+
+    .profile-layout {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        gap: 2rem;
+    }
+
+    .card {
+        background: var(--surface);
+        border-radius: 1.25rem;
+        padding: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-header-card { text-align: center; padding: 2.5rem 1.5rem; }
+
+    .avatar-box {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, var(--primary), #818cf8);
+        border-radius: 2rem;
+        margin: 0 auto 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: white;
+        box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4);
+    }
+
+    .profile-header-card h2 { margin: 0 0 0.5rem; font-size: 1.5rem; }
+    
+    .badge {
+        background: rgba(99, 102, 241, 0.1);
+        color: var(--primary);
+        padding: 0.4rem 1rem;
+        border-radius: 2rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .quick-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .stat-item { display: flex; align-items: center; gap: 0.75rem; text-align: left; }
+    .stat-item i { color: var(--text-muted); font-size: 1.1rem; }
+    .stat-label { display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-value { font-weight: 600; font-size: 0.95rem; }
+
+    .info-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
+    .info-item { display: flex; gap: 1rem; }
+    .info-item i { color: var(--primary); margin-top: 0.25rem; }
+    .info-label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.2rem; }
+    .info-value { font-weight: 500; line-height: 1.5; }
+
+    .results-card .card-header { margin-bottom: 2rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 1.5rem; }
+    .results-card h3 { margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.75rem; }
+    .results-card p { color: var(--text-muted); margin: 0; font-size: 0.9rem; }
+
+    .modern-table { width: 100%; border-collapse: collapse; }
+    .modern-table th { padding: 1rem; text-align: left; color: var(--text-muted); font-size: 0.85rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    .modern-table td { padding: 1.25rem 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    
+    .result-badge {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: 500;
+        min-width: 60px;
+        display: inline-block;
+        text-align: center;
+    }
+
+    /* Header Nav Buttons */
+    .btn-back-list {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.65rem 1.25rem;
+        border-radius: 0.75rem;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 500;
+        font-size: 0.9rem;
+        text-decoration: none;
+        color: var(--text-muted);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.2s ease;
+    }
+    .btn-back-list:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text);
+        border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-print {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.65rem 1.25rem;
+        border-radius: 0.75rem;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 500;
+        font-size: 0.9rem;
+        cursor: pointer;
+        color: var(--text-muted);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.2s ease;
+    }
+    .btn-print:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text);
+        border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-edit-profile {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.65rem 1.4rem;
+        border-radius: 0.75rem;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        color: var(--primary);
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        transition: all 0.2s ease;
+    }
+    .btn-edit-profile:hover {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+        transform: translateY(-1px);
+    }
+
+    @@media (max-width: 1024px) {
+        .profile-layout { grid-template-columns: 1fr; }
+    }
+
+    @@media print {
+        .sidebar, .header-nav, .no-print { display: none !important; }
+        .main-content { margin: 0 !important; width: 100% !important; padding: 0 !important; }
+        .card { border: 1px solid #ddd; box-shadow: none; color: black; background: white; }
+        .stat-value, .info-value { color: black; }
+        .badge, .result-badge { border: 1px solid #ccc; color: black; background: #eee; }
+        .modern-table th, .modern-table td { color: black; border-bottom: 1px solid #ddd; }
+    }
+</style>

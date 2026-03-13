@@ -25,33 +25,33 @@ namespace SiriVajiranana_Web.Models
         [StringLength(20)]
         public string Telephone_No { get; set; } = "";
 
-        public string Other_Skills { get; set; } = "";
-
+        public string? Other_Skills { get; set; }
+        
         [Required(ErrorMessage = "Year of Admission is required")]
         [StringLength(50)]
         public string Year_of_Admission { get; set; } = "";
         
         // Grades setup
-        public string Grade05_Buddhism { get; set; } = "";
-        public string Grade05_Abhidhamma { get; set; } = "";
-        public string Grade05_Pali { get; set; } = "";
-        public string Grade06_Buddhism { get; set; } = "";
-        public string Grade06_Abhidhamma { get; set; } = "";
-        public string Grade06_Pali { get; set; } = "";
-        public string Grade07_Buddhism { get; set; } = "";
-        public string Grade07_Abhidhamma { get; set; } = "";
-        public string Grade07_Pali { get; set; } = "";
-        public string Grade08_Buddhism { get; set; } = "";
-        public string Grade08_Abhidhamma { get; set; } = "";
-        public string Grade08_Pali { get; set; } = "";
-        public string Grade09_Buddhism { get; set; } = "";
-        public string Grade09_Abhidhamma { get; set; } = "";
-        public string Grade09_Pali { get; set; } = "";
-        public string Grade10_Buddhism { get; set; } = "";
-        public string Grade10_Abhidhamma { get; set; } = "";
-        public string Grade10_Pali { get; set; } = "";
-        public string Grade11_Buddhism { get; set; } = "";
-        public string Grade11_Abhidhamma { get; set; } = "";
-        public string Grade11_Pali { get; set; } = "";
+        public string? Grade05_Buddhism { get; set; }
+        public string? Grade05_Abhidhamma { get; set; }
+        public string? Grade05_Pali { get; set; }
+        public string? Grade06_Buddhism { get; set; }
+        public string? Grade06_Abhidhamma { get; set; }
+        public string? Grade06_Pali { get; set; }
+        public string? Grade07_Buddhism { get; set; }
+        public string? Grade07_Abhidhamma { get; set; }
+        public string? Grade07_Pali { get; set; }
+        public string? Grade08_Buddhism { get; set; }
+        public string? Grade08_Abhidhamma { get; set; }
+        public string? Grade08_Pali { get; set; }
+        public string? Grade09_Buddhism { get; set; }
+        public string? Grade09_Abhidhamma { get; set; }
+        public string? Grade09_Pali { get; set; }
+        public string? Grade10_Buddhism { get; set; }
+        public string? Grade10_Abhidhamma { get; set; }
+        public string? Grade10_Pali { get; set; }
+        public string? Grade11_Buddhism { get; set; }
+        public string? Grade11_Abhidhamma { get; set; }
+        public string? Grade11_Pali { get; set; }
     }
 }

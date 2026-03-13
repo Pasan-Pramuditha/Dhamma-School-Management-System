@@ -62,6 +62,7 @@ C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\o
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\SiriVajiranana_Web.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\SiriVajiranana_Web.RazorAssemblyInfo.cache
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\SiriVajiranana_Web.RazorAssemblyInfo.cs
+C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\SiriVajiranana_Web.sourcelink.json
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\rjimswa.dswa.cache.json
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
@@ -136,10 +137,10 @@ C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\o
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\SiriVaji.01D3B08A.Up2Date
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\SiriVajiranana_Web.dll
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\refint\SiriVajiranana_Web.dll
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\SiriVajiranana_Web.pdb
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\SiriVajiranana_Web.genruntimeconfig.cache
 C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\ref\SiriVajiranana_Web.dll
-C:\Users\pasan\Desktop\Siri Vajiranana Dhamma School system\SiriVajiranana_Web\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

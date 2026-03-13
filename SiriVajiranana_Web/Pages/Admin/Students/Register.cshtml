@@ -15,20 +15,20 @@
             <h2 class="section-title"><i class="fa-solid fa-user-gear"></i> Personal Information</h2>
             <div class="form-grid">
                 <div class="form-group">
-                    <label asp-for="Student.Registration_No">Registration Number</label>
-                    <input asp-for="Student.Registration_No" class="form-control" placeholder="Enter ID" />
+                    <label asp-for="Student.Registration_No">Registration Number <span class="required-star">*</span></label>
+                    <input asp-for="Student.Registration_No" class="form-control" placeholder="Enter ID" required />
                     <span asp-validation-for="Student.Registration_No" class="validation-error"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Student.Name">Full Name</label>
-                    <input asp-for="Student.Name" class="form-control" placeholder="Enter student's full name" />
+                    <label asp-for="Student.Name">Full Name <span class="required-star">*</span></label>
+                    <input asp-for="Student.Name" class="form-control" placeholder="Enter student's full name" required />
                     <span asp-validation-for="Student.Name" class="validation-error"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Student.Gender">Gender</label>
-                    <select asp-for="Student.Gender" class="form-control">
+                    <label asp-for="Student.Gender">Gender <span class="required-star">*</span></label>
+                    <select asp-for="Student.Gender" class="form-control" required>
                         <option value="">Select Gender</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
@@ -37,20 +37,20 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Student.Telephone_No">Telephone No</label>
-                    <input asp-for="Student.Telephone_No" class="form-control" placeholder="Enter phone number" />
+                    <label asp-for="Student.Telephone_No">Telephone No <span class="required-star">*</span></label>
+                    <input asp-for="Student.Telephone_No" class="form-control" placeholder="Enter phone number" required />
                     <span asp-validation-for="Student.Telephone_No" class="validation-error"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Student.Year_of_Admission">Year of Admission</label>
-                    <input asp-for="Student.Year_of_Admission" class="form-control" placeholder="YYYY" />
+                    <label asp-for="Student.Year_of_Admission">Year of Admission <span class="required-star">*</span></label>
+                    <input asp-for="Student.Year_of_Admission" class="form-control" placeholder="YYYY" required />
                     <span asp-validation-for="Student.Year_of_Admission" class="validation-error"></span>
                 </div>
 
                 <div class="form-group full-width">
-                    <label asp-for="Student.Address">Address</label>
-                    <textarea asp-for="Student.Address" class="form-control" rows="2" placeholder="Enter permanent address"></textarea>
+                    <label asp-for="Student.Address">Address <span class="required-star">*</span></label>
+                    <textarea asp-for="Student.Address" class="form-control" rows="2" placeholder="Enter permanent address" required></textarea>
                     <span asp-validation-for="Student.Address" class="validation-error"></span>
                 </div>
 
@@ -172,6 +172,12 @@
         font-size: 0.8rem;
         margin-top: 0.4rem;
         display: block;
+    }
+
+    .required-star {
+        color: #ef4444;
+        font-weight: bold;
+        margin-left: 2px;
     }
 
     .form-grid {

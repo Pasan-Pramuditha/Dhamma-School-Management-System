@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|solutionrelative:sirivajiranana_web\\pages\\admin\\teachers\\manage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|c:\\users\\pasan\\desktop\\siri vajiranana dhamma school system\\sirivajiranana_web\\pages\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|solutionrelative:sirivajiranana_web\\pages\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|c:\\users\\pasan\\desktop\\siri vajiranana dhamma school system\\sirivajiranana_web\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|solutionrelative:sirivajiranana_web\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|c:\\users\\pasan\\desktop\\siri vajiranana dhamma school system\\sirivajiranana_web\\pages\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|solutionrelative:sirivajiranana_web\\pages\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EF686C72-89B9-4388-8CA3-FD05A205DBB2}|SiriVajiranana_Web\\SiriVajiranana_Web.csproj|c:\\users\\pasan\\desktop\\siri vajiranana dhamma school system\\sirivajiranana_web\\models\\signupviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -59,7 +59,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Dashboard.cshtml",
               "DocumentMoniker": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Pages\\Admin\\Dashboard.cshtml",
               "RelativeDocumentMoniker": "SiriVajiranana_Web\\Pages\\Admin\\Dashboard.cshtml",
@@ -107,7 +107,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Student.cs",
               "DocumentMoniker": "C:\\Users\\pasan\\Desktop\\Siri Vajiranana Dhamma School system\\SiriVajiranana_Web\\Models\\Student.cs",
               "RelativeDocumentMoniker": "SiriVajiranana_Web\\Models\\Student.cs",

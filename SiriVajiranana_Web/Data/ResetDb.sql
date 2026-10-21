@@ -1,15 +1,17 @@
-USE [C:\USERS\PASAN\DESKTOP\SIRI VAJIRANANA DHAMMA SCHOOL SYSTEM\SIRIVAJIRANANA_WEB\DATA\DATABASE1.MDF];
-GO
+-- Database Reset Script for Dhamma School Management System
+-- Run against Database1.mdf
 
+
+DROP TABLE IF EXISTS Teachers;
 DROP TABLE IF EXISTS Student_Registration;
 DROP TABLE IF EXISTS Login;
 GO
 
 CREATE TABLE Login (
     AdminID int PRIMARY KEY,
-    UserName varchar(50),
-    Password varchar(50),
-    Admin_Name nvarchar(255),
+    UserName varchar(50) NOT NULL,
+    Password varchar(50) NOT NULL,
+    Admin_Name nvarchar(255) NOT NULL,
     IsApproved bit DEFAULT 0
 );
 GO
@@ -44,4 +46,22 @@ CREATE TABLE Student_Registration (
     Grade11_Abhidhamma varchar(255),
     Grade11_Pali varchar(255)
 );
+GO
+
+CREATE TABLE Teachers (
+    TeacherID int PRIMARY KEY,
+    Name nvarchar(255) NOT NULL,
+    Gender varchar(20) NOT NULL,
+    NIC varchar(20) NOT NULL,
+    Telephone_No varchar(20) NOT NULL,
+    Address nvarchar(MAX) NOT NULL,
+    Email nvarchar(100),
+    Year_of_Appointment varchar(20) NOT NULL,
+    Subject nvarchar(100) NOT NULL
+);
+GO
+
+-- Seed default Super Admin
+INSERT INTO Login (AdminID, UserName, Password, Admin_Name, IsApproved)
+VALUES (1, 'Super Admin', 'Super Admin', 'Super Admin', 1);
 GO

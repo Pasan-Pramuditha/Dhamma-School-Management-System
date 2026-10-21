@@ -1,5 +1,4 @@
 # Siri Vajiranana Dhamma School Management System
-(සිරි වජිරඤාණ දහම් පාසල් කළමනාකරණ පද්ධතිය)
 
 A modern web application built with **ASP.NET Core (.NET 9 Razor Pages)** and **SQL Server LocalDB** to manage students, teachers, results, and administrative accounts.
 
